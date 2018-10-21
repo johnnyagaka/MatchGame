@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Match Game</title>
+	<link rel="stylesheet"href="M.jpg"/>
+	<style type="text/css">
+		.rules{
+			text-align: center;
+			align-content: left;
+			padding: 10px;
+			font-family: Lato, sans-serif;
+;
+		}
+		
+		body{
+			background-color:rgb(255,242,242);
+			
+		
+			
+		}
+	div#memory_board{
+		background:rgb(255,242,242);
+		width: 1080px;
+		height: 800px;
+		padding-left: 20em;
+        padding-right: 20em;
+	  margin: auto;
+		
+		
+	}
+div#memory_board > div{
+		background:rgb(32, 64, 86);
+		border: #000 1px solid;
+		width: 180px;
+		height: 200px;
+		padding: 20px;
+		margin: 3px;
+	text-align: center;
+	float: left;
+	font-size: 110px;
+	border-left:auto solid rgb(255,242,242);
+	font-weight: 900px;
+	cursor: pointer;
+		
+	}
+		
+		
+
+	</style>
+	<script type="text/javascript">
+		var memory_array=['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8'];
+		var memory_values=[];
+		var memory_tile_ids=[];
+		var tiles_flipped=0;
+		Array.prototype.memory_tile_shuffle=function(){
+			var i=this.length, j, temp;
+			while(--i>0){
+				j=Math.floor(Math.random()*(i+1))
+				temp=this[j];
+				this[j]=this[i];
+				this[i]=temp;
+			}
+		}
+		function newBoard(){
+			tiles_flipped=0;
+			var output='';
+			memory_array.memory_tile_shuffle();
+		for(var i=0; i < memory_array.length; i++){
+			output +='<div id="tile_ '+i+'" onclick="memoryFlipTile(this,\''+memory_array[i]+'\')"></div>';
+		}
+			document.getElementById('memory_board').innerHTML=output;
+		}
+		function memoryFlipTile(tile,val){
+			if(tile.innerHTML=="" && memory_values.length<2){
+				tile.style.background='lightgreen';
+				tile.innerHTML=val;
+			if(memory_values.length==0){
+					memory_values.push(val);
+				memory_tile_ids.push(tile.id);}
+			else if(memory_values.length==1){
+					memory_values.push(val);
+				memory_tile_ids.push(tile.id);
+			if(memory_values[0]==memory_values[1]){
+						tiles_flipped += 2;
+						memory_values=[];
+						memory_tile_ids=[];
+				//checks if the values are the same when the cards are flipped
+			if(tiles_flipped==memory_array.length){
+				alert("Game Over...Start New Game");
+				document.getElementById('memory_board').innerHTML="";
+				newBoard();
+				//enables generation of a new board
+				
+			}	
+					}
+				else {
+					function flip2Back(){
+						var tile_1=document.getElementById(memory_tile_ids[0]);
+						var tile_2=document.getElementById(memory_tile_ids[1]);
+						tile_1.style.background='rgb(32, 64, 86)';
+						tile_1.innerHTML="";
+						tile_2.style.background='rgb(32, 64, 86)';
+						tile_2.innerHTML="";
+						memory_values=[];
+						memory_tile_ids=[];		
+					}
+					setTimeout(flip2Back,700)
+				}
+					
+				}
+			}
+		}
+		
+
+
+
+	</script>
+</head>
+<body>
+		<div class="rules">
+			 <br>
+			 <br>
+        <h1 style="color: rgb(32, 64, 86)">Match Game</h1>
+        <h4 style="color: rgb(32, 64, 86)">Rules</h4>
+        <p style="font-size: 16px" ><b>Click on a card to reveal the numberon the other side. Click on a second card to try and find a match to the first. If you succeed, the pair will be removed from play. If not, try again!</b></p>
+			 <br>
+        <h4 style="color: rgb(32, 64, 86)"><b>How To Win</b></h4>
+		
+        <p><b>You win when all pairs have been found.</b></p>
+		</div>
+	     
+	<div id="memory_board" style="padding-right: 150px;padding-top: 10px" >    </div>
+
+	
+	
+	
+	
+	<script>newBoard();</script>
+ 
+</body>
+</html>
